@@ -76,3 +76,10 @@ eval/benchmark/agentnetbench/output/
 venv/
 ENV/
 .venv/
+
+# ==========================================
+# Evaluation Results
+# ==========================================
+eval_results/
+eval_results/Qwen3-VL-4B-Instruct/
+eval_results/UI-Voyager/

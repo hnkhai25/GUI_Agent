@@ -23,11 +23,11 @@ DEFAULT_CONFIG = {
     'env': {
         'console_port': 5556,
         'grpc_port': 8554,
-        'adb_path': '~/android/platform-tools/adb',
-        'emulator_path': '/root/android/emulator/emulator',
+        'adb_path': '~/Android/Sdk/platform-tools/adb',
+        'emulator_path': '~/Android/Sdk/emulator/emulator',
         'avd_name': 'AndroidWorldAvd',
-        'android_sdk_root': '/root/android/',
-        'android_avd_home': '/root/android/avd/',
+        'android_sdk_root': '~/Android/Sdk/',
+        'android_avd_home': '~/.android/avd/',
     },
     'llm': {
         'type': 'openai',

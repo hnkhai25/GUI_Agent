@@ -52,12 +52,12 @@ class EvalRunner:
             console_port=env_config.get('console_port', 5556),
             emulator_setup=False,
             freeze_datetime=True,
-            adb_path=os.path.expanduser(env_config.get('adb_path', '~/android/platform-tools/adb')),
+            adb_path=os.path.expanduser(env_config.get('adb_path', '~/Android/Sdk/platform-tools/adb')),
             grpc_port=env_config.get('grpc_port', 8554),
-            emulator_path=env_config.get('emulator_path', '/root/android/emulator/emulator'),
+            emulator_path=os.path.expanduser(env_config.get('emulator_path', '~/Android/Sdk/emulator/emulator')),
             avd_name=env_config.get('avd_name', 'AndroidWorldAvd'),
-            android_sdk_root=env_config.get('android_sdk_root', '/root/android/'),
-            android_avd_home=env_config.get('android_avd_home', '/root/android/avd/'),
+            android_sdk_root=os.path.expanduser(env_config.get('android_sdk_root', '~/Android/Sdk/')),
+            android_avd_home=os.path.expanduser(env_config.get('android_avd_home', '~/.android/avd/')),
             adb_server_port=env_config.get('adb_server_port', 5037),
         )
         

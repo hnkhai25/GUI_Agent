@@ -15,9 +15,9 @@
 
 # ==================== Basic Config ====================
 
-CONFIG_NAME="${CONFIG_NAME:-Qwen3-VL-4B-Instruct}"
-MODEL_NAME="${MODEL_NAME:-Qwen3-VL-4B-Instruct}"
-NUM_WORKERS="${NUM_WORKERS:-4}"
+CONFIG_NAME="${CONFIG_NAME:-UI-Voyager}"
+MODEL_NAME="${MODEL_NAME:-UI-Voyager}"
+NUM_WORKERS="${NUM_WORKERS:-1}"
 START_PORT="${START_PORT:-5556}"
 AVD_NAME="${AVD_NAME:-AndroidWorldAvd}"
 N_REPEATS="${N_REPEATS:-1}"
@@ -47,10 +47,15 @@ export PYTHONPATH="${ANDROID_WORLD_PATH}:${ANDROID_ENV_PATH}:${PYTHONPATH}"
 
 # ==================== Emulator Config ====================
 
-EMULATOR_PATH="${EMULATOR_PATH:-/root/android/emulator/emulator}"
-ADB_PATH="${ADB_PATH:-$HOME/android/platform-tools/adb}"
-export ANDROID_SDK_ROOT="${ANDROID_SDK_ROOT:-/root/android}"
-export ANDROID_AVD_HOME="${ANDROID_AVD_HOME:-/root/android/avd}"
+# EMULATOR_PATH="${EMULATOR_PATH:-/root/android/emulator/emulator}"
+# ADB_PATH="${ADB_PATH:-$HOME/android/platform-tools/adb}"
+# export ANDROID_SDK_ROOT="${ANDROID_SDK_ROOT:-/root/android}"
+# export ANDROID_AVD_HOME="${ANDROID_AVD_HOME:-/root/android/avd}"
+
+EMULATOR_PATH="${EMULATOR_PATH:-$HOME/Android/Sdk/emulator/emulator}"
+ADB_PATH="${ADB_PATH:-$HOME/Android/Sdk/platform-tools/adb}"
+export ANDROID_SDK_ROOT="${ANDROID_SDK_ROOT:-$HOME/Android/Sdk}"
+export ANDROID_AVD_HOME="${ANDROID_AVD_HOME:-$HOME/.android/avd}"
 
 EMU_MEMORY=8192
 EMU_CORES=4
@@ -229,7 +234,8 @@ start_emulators() {
                 break
             else
                 log "  [FAIL] Worker $i failed to start (attempt $attempt/$EMU_START_MAX_RETRIES)"
-                [[ -f "$emu_log" ]] && tail -3 "$emu_log" | sed 's/^/    /'
+                # [[ -f "$emu_log" ]] && tail -3 "$emu_log" | sed 's/^/    /'
+                [[ -f "$emu_log" ]] && { echo "---- emulator log ($emu_log) ----"; tail -50 "$emu_log"; echo "-------------------------------"; }
                 if [[ $attempt -lt $EMU_START_MAX_RETRIES ]]; then
                     log "  [RETRY] Worker $i: retrying in 3s..."
                     sleep 3

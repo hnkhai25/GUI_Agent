@@ -90,12 +90,27 @@ def get_a11y_tree(
   forest: Optional[
       android_accessibility_forest_pb2.AndroidAccessibilityForest
   ] = None
-  for _ in range(max_retries):
+  for attempt in range(max_retries):
     try:
-      forest = env.accumulate_new_extras()['accessibility_tree'][-1]  # pytype:disable=attribute-error
+      extras = env.accumulate_new_extras()  # pytype:disable=attribute-error
+      logging.warning(
+          'A11Y attempt %d/%d, extras keys: %s',
+          attempt + 1,
+          max_retries,
+          list(extras.keys()) if hasattr(extras, 'keys') else type(extras),
+      )
+      logging.warning(
+          'A11Y attempt %d/%d, extras content: %r',
+          attempt + 1,
+          max_retries,
+          extras,
+      )
+      forest = extras['accessibility_tree'][-1]
       return forest
-    except KeyError:
-      logging.warning('Could not get a11y tree, retrying.')
+    except KeyError as e:
+      logging.warning('Could not get a11y tree, retrying. KeyError: %s', e)
+    except Exception as e:
+      logging.exception('Unexpected error while getting a11y tree: %s', e)
     time.sleep(sleep_duration)
 
   if forest is None:
